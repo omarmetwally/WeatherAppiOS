@@ -61,7 +61,7 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         if Calendar.current.isDateInToday(dateObj) {
             return "Today"
         } else {
-            dateFormatter.dateFormat = "EEEE"
+            dateFormatter.dateFormat = "EEE"
             return dateFormatter.string(from: dateObj)
         }
     }
@@ -69,4 +69,24 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         let currentHour = Calendar.current.component(.hour, from: Date())
         return day.hour.first { Calendar.current.component(.hour, from: DateFormatter().date(from: $0.time) ?? Date()) == currentHour }
     }
+    func filteredHourlyForecast(day: ForecastDay) -> [HourlyForecast] {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            
+            if formatDate(day.date) == "Today" {
+                let currentTime = Date()
+                return day.hour.filter { dateFormatter.date(from: $0.time)! >= currentTime }
+            } else {
+                return day.hour
+            }
+        }
+    func formatTime(_ time: String) -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            
+            guard let dateObj = dateFormatter.date(from: time) else { return time }
+            
+            dateFormatter.dateFormat = "h a"
+            return dateFormatter.string(from: dateObj)
+        }
 }

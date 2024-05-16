@@ -11,37 +11,40 @@ struct ContentView: View {
     @ObservedObject var viewModel = WeatherViewModel()
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                Image(viewModel.isMorning ? "Day" : "Night")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: geometry.size.width, height: .infinity)
-                    .edgesIgnoringSafeArea(.all)
-                
-                if let weatherData = viewModel.weather {
-                    ScrollView {
-                        VStack {
-                            TopSectionView(location: weatherData.location, current: weatherData.current)
-                            ForecastTableView(viewModel: viewModel, forecast: weatherData.forecast)
-                            BottomSectionView(current: weatherData.current)
+        NavigationView{
+            GeometryReader { geometry in
+                ZStack {
+                    Image(viewModel.isMorning ? "Day" : "Night")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geometry.size.width, height: .infinity)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    if let weatherData = viewModel.weather {
+                        ScrollView {
+                            VStack {
+                                TopSectionView(location: weatherData.location, current: weatherData.current)
+                                ForecastTableView(viewModel: viewModel, forecast: weatherData.forecast)
+                                BottomSectionView(current: weatherData.current)
+                            }
+                            .padding()
                         }
-                        .padding()
+                    } else {
+                        VStack {
+                            ProgressView("Fetching Weather Data...")
+                                .font(Font.title2)
+                                .foregroundColor(.white)
+                        }
+                        .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
                     }
-                } else {
-                    VStack {
-                        ProgressView("Fetching Weather Data...")
-                            .font(Font.title2)
-                            .foregroundColor(.white)
-                    }
-                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
                 }
             }
+            .onAppear {
+                viewModel.requestLocationPermission()
+                viewModel.startTimer()
+            }
         }
-        .onAppear {
-            viewModel.requestLocationPermission()
-            viewModel.startTimer()
-        }
+        
     }
 }
 

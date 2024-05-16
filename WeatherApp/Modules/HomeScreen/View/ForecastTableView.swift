@@ -21,8 +21,10 @@ struct ForecastTableView: View {
             
             VStack(spacing: 0) {
                 ForEach(forecast.forecastday, id: \.date) { day in
-                    if let hourlyForecast = viewModel.hourlyForecastForCurrentTime(day: day) {
-                        ForecastRow(day: day, hour: hourlyForecast, viewModel: viewModel)
+                    NavigationLink(destination: DetailsForecastView(day: day, viewModel: viewModel)) {
+                        if let hourlyForecast = viewModel.hourlyForecastForCurrentTime(day: day) {
+                            ForecastRow(day: day, hour: hourlyForecast, viewModel: viewModel)
+                        }
                     }
                 }
             }
@@ -41,7 +43,9 @@ struct ForecastRow: View {
         HStack {
             Text(viewModel.formatDate(day.date))
                 .foregroundColor(.black)
-                .frame(width: 80, alignment: .leading)
+                .font(.system(size: 22))
+                .frame(width: 60, alignment: .leading)
+            
             
             Spacer()
             
@@ -53,7 +57,8 @@ struct ForecastRow: View {
             
             Text("\(Int(day.day.mintemp_c))° - \(Int(day.day.maxtemp_c))°")
                 .foregroundColor(.black)
-                .frame(width: 80, alignment: .trailing)
+                .font(.system(size: 22))
+                .frame(width: 100, alignment: .trailing)
         }
         .padding()
     }
