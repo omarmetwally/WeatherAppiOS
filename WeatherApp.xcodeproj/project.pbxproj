@@ -23,6 +23,8 @@
 		076BE6AF2BF63AC900F35A77 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076BE6AE2BF63AC900F35A77 /* Constants.swift */; };
 		076BE6B12BF63B0D00F35A77 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076BE6B02BF63B0D00F35A77 /* Helper.swift */; };
 		076BE6B32BF63BEF00F35A77 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076BE6B22BF63BEF00F35A77 /* NetworkService.swift */; };
+		076BE6B72BF6436C00F35A77 /* TopSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076BE6B62BF6436C00F35A77 /* TopSectionView.swift */; };
+		076BE6B92BF64AE100F35A77 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076BE6B82BF64AE100F35A77 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,9 @@
 		076BE6AE2BF63AC900F35A77 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		076BE6B02BF63B0D00F35A77 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		076BE6B22BF63BEF00F35A77 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		076BE6B62BF6436C00F35A77 /* TopSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSectionView.swift; sourceTree = "<group>"; };
+		076BE6B82BF64AE100F35A77 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		076BE6BA2BF64F4200F35A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +117,7 @@
 		076BE66D2BF637C700F35A77 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				076BE6BA2BF64F4200F35A77 /* Info.plist */,
 				076BE69F2BF6390400F35A77 /* Service */,
 				076BE69E2BF638DD00F35A77 /* Utilites */,
 				076BE69D2BF638D500F35A77 /* Modules */,
@@ -171,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				076BE6B22BF63BEF00F35A77 /* NetworkService.swift */,
+				076BE6B82BF64AE100F35A77 /* LocationManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -188,6 +195,7 @@
 		076BE6A12BF6391800F35A77 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				076BE6B62BF6436C00F35A77 /* TopSectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -349,7 +357,9 @@
 				076BE67B2BF637CA00F35A77 /* WeatherApp.xcdatamodeld in Sources */,
 				076BE6AD2BF63A6600F35A77 /* WeatherViewModel.swift in Sources */,
 				076BE6AB2BF63A3200F35A77 /* WeatherResponse.swift in Sources */,
+				076BE6B92BF64AE100F35A77 /* LocationManager.swift in Sources */,
 				076BE6782BF637CA00F35A77 /* Persistence.swift in Sources */,
+				076BE6B72BF6436C00F35A77 /* TopSectionView.swift in Sources */,
 				076BE6B32BF63BEF00F35A77 /* NetworkService.swift in Sources */,
 				076BE6AF2BF63AC900F35A77 /* Constants.swift in Sources */,
 				076BE6712BF637C700F35A77 /* ContentView.swift in Sources */,
@@ -515,6 +525,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -543,6 +555,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
