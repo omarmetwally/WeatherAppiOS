@@ -52,4 +52,21 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
     }
+    func formatDate(_ date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        guard let dateObj = dateFormatter.date(from: date) else { return date }
+        
+        if Calendar.current.isDateInToday(dateObj) {
+            return "Today"
+        } else {
+            dateFormatter.dateFormat = "EEEE"
+            return dateFormatter.string(from: dateObj)
+        }
+    }
+    func hourlyForecastForCurrentTime(day: ForecastDay) -> HourlyForecast? {
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        return day.hour.first { Calendar.current.component(.hour, from: DateFormatter().date(from: $0.time) ?? Date()) == currentHour }
+    }
 }

@@ -19,22 +19,23 @@ struct ContentView: View {
                     .frame(width: geometry.size.width, height: .infinity)
                     .edgesIgnoringSafeArea(.all)
                 
-                VStack {
-                    if let weatherData = viewModel.weather {
-                        TopSectionView(location: weatherData.location, current: weatherData.current)
-                        Spacer()
-                        
-                        BottomSectionView(current: weatherData.current)
-                        
-                    } else {
+                if let weatherData = viewModel.weather {
+                    ScrollView {
+                        VStack {
+                            TopSectionView(location: weatherData.location, current: weatherData.current)
+                            ForecastTableView(viewModel: viewModel, forecast: weatherData.forecast)
+                            BottomSectionView(current: weatherData.current)
+                        }
+                        .padding()
+                    }
+                } else {
+                    VStack {
                         ProgressView("Fetching Weather Data...")
                             .font(Font.title2)
                             .foregroundColor(.white)
                     }
+                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
                 }
-            
-
-                .padding()
             }
         }
         .onAppear {
