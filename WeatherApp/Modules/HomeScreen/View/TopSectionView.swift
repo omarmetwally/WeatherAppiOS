@@ -16,32 +16,33 @@ struct TopSectionView: View {
             Text(location.name)
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(.white)
+                .foregroundColor(.black)
             
             Text("\(Int(current.temp_c))°")
                 .font(.system(size: 80))
                 .fontWeight(.thin)
-                .foregroundColor(.white)
-            
+                .foregroundColor(.black)
+
             Text(current.condition.text)
                 .font(.title3)
-                .foregroundColor(.white)
-            
+                .foregroundColor(.black)
+
             HStack {
                 Text("H: \(Int(current.temp_c))°")
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
                 Text("L: \(Int(current.feelslike_c))°")
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
             }
             
             Image(systemName: "cloud.sun.fill")
                 .resizable()
                 .frame(width: 50, height: 50)
-                .foregroundColor(.white)
+                .foregroundColor(.black)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.3)) 
+        .background(Color.white.opacity(0.3))
+        .cornerRadius(10)
     }
 }
 

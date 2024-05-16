@@ -7,17 +7,16 @@
 import Foundation
 import CoreLocation
 
-class WeatherViewModel: ObservableObject {
+class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var weather: WeatherResponse?
-    @Published var errorMessage: String?
-    
+    @Published var isMorning: Bool = Helper.isMorning()
     private let networkService: NetworkProtocol
-    private let locationManager = LocationManager()
+    private let locationManager = CLLocationManager()
     
     init(networkService: NetworkProtocol = NetworkService()) {
         self.networkService = networkService
+        super.init()
         locationManager.delegate = self
-        locationManager.startUpdatingLocation()
     }
     
     func fetchWeather(for location: CLLocation) {
@@ -30,26 +29,27 @@ class WeatherViewModel: ObservableObject {
                     self?.weather = weatherResponse
                 }
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.errorMessage = "Error fetching weather: \(error.localizedDescription)"
-                }
+                print("Error fetching weather: \(error.localizedDescription)")
             }
         }
     }
     
     func requestLocationPermission() {
-        locationManager.requestLocationPermission()
-    }
-}
-
-extension WeatherViewModel: LocationManagerDelegate {
-    func didUpdateLocation(_ location: CLLocation) {
-        fetchWeather(for: location)
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
-    func didFailWithError(_ error: Error) {
-        DispatchQueue.main.async {
-            self.errorMessage = "Failed to get user's location: \(error.localizedDescription)"
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        fetchWeather(for: location)
+        locationManager.stopUpdatingLocation() //comment lw h3oz el location dyman yt8er
+    }
+    
+    func startTimer() {
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.isMorning = Helper.isMorning()
+            }
         }
     }
 }
