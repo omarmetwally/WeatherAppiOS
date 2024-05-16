@@ -10,6 +10,7 @@ import Foundation
 struct Helper {
     static func isMorning() -> Bool {
         let hour = Calendar.current.component(.hour, from: Date())
-        return hour >= Constants.TimeRange.morningStart && hour <= Constants.TimeRange.eveningStart
+        print("Timeeee \(hour)")
+        return hour >= Constants.TimeRange.morningStart && hour < Constants.TimeRange.eveningStart
     }
 }
