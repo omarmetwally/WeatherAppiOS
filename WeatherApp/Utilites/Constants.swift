@@ -9,7 +9,7 @@ import Foundation
 
 struct Constants {
     static let apiKey = "9c37d92e9d3d4dc8a0c124203241605"
-    static let baseUrl = "http://api.weatherapi.com/v1/forecast.json"
+    static let baseUrl = "https://api.weatherapi.com/v1/forecast.json"
     
     enum TimeRange {
         static let morningStart = 5
