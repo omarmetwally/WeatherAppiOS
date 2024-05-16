@@ -11,17 +11,15 @@ struct BottomSectionView: View {
     let current: CurrentWeather
     
     var body: some View {
-        VStack(spacing: 20) {
-            HStack {
-                BottomDetailView(title: "VISIBILITY", value: "10 km")
-                Spacer()
-                BottomDetailView(title: "HUMIDITY", value: "\(current.humidity)%")
-            }
-            HStack {
-                BottomDetailView(title: "FEELS LIKE", value: "\(current.feelslike_c)°")
-                Spacer()
-                BottomDetailView(title: "PRESSURE", value: "\(current.pressure_mb) hPa")
-            }
+        LazyVGrid(
+            columns: Array(repeating: GridItem(.flexible()), count: 2),
+            alignment: .center,
+            spacing: 20
+        ) {
+            BottomDetailView(title: "VISIBILITY", value: "10 km")
+            BottomDetailView(title: "HUMIDITY", value: "\(current.humidity)%")
+            BottomDetailView(title: "FEELS LIKE", value: "\(current.feelslike_c)°")
+            BottomDetailView(title: "PRESSURE", value: "\(current.pressure_mb) hPa")
         }
         .padding()
         .background(Color.white.opacity(0.3))
@@ -43,6 +41,7 @@ struct BottomDetailView: View {
                 .font(.title)
                 .foregroundColor(.black)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
