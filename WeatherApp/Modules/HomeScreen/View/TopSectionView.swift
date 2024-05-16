@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TopSectionView: View {
     let location: Location
@@ -14,30 +15,37 @@ struct TopSectionView: View {
     var body: some View {
         VStack {
             Text(location.name)
-                .font(.largeTitle)
+                .font(.system(size: 30))
                 .fontWeight(.bold)
                 .foregroundColor(.black)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
             
-            Text("\(Int(current.temp_c))°")
-                .font(.system(size: 80))
-                .fontWeight(.thin)
-                .foregroundColor(.black)
-
-            Text(current.condition.text)
-                .font(.title3)
-                .foregroundColor(.black)
-
+          
+            
             HStack {
-                Text("H: \(Int(current.temp_c))°")
+                VStack {
+                    Text(current.condition.text)
+                        .font(.title3)
+                        .foregroundColor(.black)
+                    
+                    HStack {
+                        Text("H: \(Int(current.temp_c))°")
+                            .foregroundColor(.black)
+                        Text("L: \(Int(current.feelslike_c))°")
+                            .foregroundColor(.black)
+                    }
+                }
+                
+                KFImage(URL(string: "https:\(current.condition.icon)"))
+                    .resizable()
+                    .frame(width: 100, height: 100)
                     .foregroundColor(.black)
-                Text("L: \(Int(current.feelslike_c))°")
+                Text("\(Int(current.temp_c))°")
+                    .font(.system(size: 40))
+                    .fontWeight(.thin)
                     .foregroundColor(.black)
             }
-            
-            Image(systemName: "cloud.sun.fill")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .foregroundColor(.black)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -48,7 +56,7 @@ struct TopSectionView: View {
 
 struct TopSectionView_Previews: PreviewProvider {
     static var previews: some View {
-        TopSectionView(location: Location(name: "Cairo"),
-                       current: CurrentWeather(temp_c: 21.0, condition: Condition(text: "Partly Cloudy", icon: ""), feelslike_c: 16.0, humidity: 36, pressure_mb: 1021.0))
+        TopSectionView(location: Location(name: "Madinat Sittah Uktubar"),
+                       current: CurrentWeather(temp_c: 21.0, condition: Condition(text: "Partly Cloudy", icon: "//cdn.weatherapi.com/weather/64x64/day/113.png"), feelslike_c: 16.0, humidity: 36, pressure_mb: 1021.0))
     }
 }

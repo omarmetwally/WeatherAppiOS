@@ -34,6 +34,7 @@ struct Forecast: Codable {
 }
 
 struct ForecastDay: Codable {
+    let id = UUID()
     let date: String
     let day: Day
     let hour: [HourlyForecast]  
@@ -46,6 +47,7 @@ struct Day: Codable {
 }
 
 struct HourlyForecast: Codable {
+    let id = UUID()
     let time: String
     let temp_c: Double
     let condition: Condition
