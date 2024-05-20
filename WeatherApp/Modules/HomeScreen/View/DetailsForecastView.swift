@@ -22,11 +22,12 @@ struct DetailsForecastView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    Text("\(viewModel.formatDate(day.date)) Hourly Forecast")
+                    Text("\(viewModel.formatDate(day.date ,isFull: false)) Hourly Forecast")
                         .font(.largeTitle)
                         .padding()
                         .background(Color.white.opacity(0.3))
                         .cornerRadius(10)
+                        .foregroundColor(viewModel.textColor)
                     
                     let hourlyForecasts = viewModel.filteredHourlyForecast(day: day)
                     
@@ -57,12 +58,9 @@ struct DetailsForecastView: View {
                     }
                 }
             }
-            
-            
         }
     }
 }
-
 
 struct HourlyForecastRow: View {
     let hour: HourlyForecast
@@ -74,6 +72,7 @@ struct HourlyForecastRow: View {
                 .font(.system(size: 22))
                 .frame(width: 60, alignment: .leading)
                 .padding()
+                .foregroundColor(viewModel.textColor)
             
             Spacer()
             
@@ -87,6 +86,7 @@ struct HourlyForecastRow: View {
                 .font(.system(size: 22))
                 .frame(width: 60, alignment: .trailing)
                 .padding()
+                .foregroundColor(viewModel.textColor)
         }
         .padding(.vertical, 8)
         .background(Color.white.opacity(0.4))

@@ -6,12 +6,16 @@
 //
 import Foundation
 import CoreLocation
-
+import SwiftUI
 class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var weather: WeatherResponse?
     @Published var isMorning: Bool = Helper.isMorning()
     private let networkService: NetworkProtocol
     private let locationManager = CLLocationManager()
+    
+    var textColor: Color {
+        return isMorning ? .black : .white
+    }
     
     init(networkService: NetworkProtocol = NetworkService()) {
         self.networkService = networkService
@@ -52,7 +56,7 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
     }
-    func formatDate(_ date: String) -> String {
+    func formatDate(_ date: String,isFull:Bool = true) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
@@ -61,7 +65,7 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         if Calendar.current.isDateInToday(dateObj) {
             return "Today"
         } else {
-            dateFormatter.dateFormat = "EEE"
+            dateFormatter.dateFormat =  isFull ? "EEE" : "EEEE"
             return dateFormatter.string(from: dateObj)
         }
     }
@@ -70,23 +74,48 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         return day.hour.first { Calendar.current.component(.hour, from: DateFormatter().date(from: $0.time) ?? Date()) == currentHour }
     }
     func filteredHourlyForecast(day: ForecastDay) -> [HourlyForecast] {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-            
-            if formatDate(day.date) == "Today" {
-                let currentTime = Date()
-                return day.hour.filter { dateFormatter.date(from: $0.time)! >= currentTime }
-            } else {
-                return day.hour
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.timeZone = TimeZone.current 
+        var filteredForecasts: [HourlyForecast] = []
+
+        if formatDate(day.date) == "Today" {
+            let currentTime = Date()
+            let calendar = Calendar.current
+            let currentHour = calendar.component(.hour, from: currentTime)
+
+            for forecast in day.hour {
+                if let forecastDate = dateFormatter.date(from: forecast.time) {
+                    let forecastHour = calendar.component(.hour, from: forecastDate)
+                    if forecastHour == currentHour {
+                        if forecastDate <= currentTime {
+                            var nowForecast = forecast
+                            nowForecast.time = "Now"
+                            filteredForecasts.append(nowForecast)
+                        }
+                    } else if forecastDate >= currentTime {
+                        filteredForecasts.append(forecast)
+                    }
+                }
             }
+        } else {
+            filteredForecasts = day.hour
         }
+        
+        return filteredForecasts
+    }
+
+
+
+
+    
     func formatTime(_ time: String) -> String {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-            
-            guard let dateObj = dateFormatter.date(from: time) else { return time }
-            
-            dateFormatter.dateFormat = "h a"
-            return dateFormatter.string(from: dateObj)
-        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        guard let dateObj = dateFormatter.date(from: time) else { return time }
+        
+        dateFormatter.dateFormat = "h a"
+        return dateFormatter.string(from: dateObj)
+    }
 }

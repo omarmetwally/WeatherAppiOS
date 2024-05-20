@@ -16,7 +16,7 @@ struct ForecastTableView: View {
         VStack {
             Text("3-DAY FORECAST")
                 .font(.headline)
-                .foregroundColor(.black)
+                .foregroundColor(viewModel.textColor)
                 .padding()
             
             List {
@@ -37,9 +37,6 @@ struct ForecastTableView: View {
         .background(Color.white.opacity(0.3))
         .cornerRadius(10)
         .frame(maxWidth: .infinity)
-
-//        .padding()
-
     }
 }
 
@@ -51,7 +48,7 @@ struct ForecastRow: View {
     var body: some View {
         HStack {
             Text(viewModel.formatDate(day.date))
-                .foregroundColor(.black)
+                .foregroundColor(viewModel.textColor)
                 .font(.system(size: 20))
                 .frame(width: 60, alignment: .leading)
             
@@ -64,13 +61,13 @@ struct ForecastRow: View {
             Spacer()
             
             Text("\(String(format: "%.1f", day.day.mintemp_c))° - \(String(format: "%.1f", day.day.maxtemp_c))°")
-                .foregroundColor(.black)
+                .foregroundColor(viewModel.textColor)
                 .font(.system(size: 20))
                 .frame(width: 150, alignment: .trailing)
         }
         .padding(.vertical, 10)
         .padding(.horizontal)
-        .background(Color.clear) 
+        .background(Color.clear)
     }
 }
 

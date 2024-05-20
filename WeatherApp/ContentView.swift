@@ -23,9 +23,9 @@ struct ContentView: View {
                     if let weatherData = viewModel.weather {
                         
                         VStack {
-                            TopSectionView(location: weatherData.location, current: weatherData.current, day: weatherData.forecast.forecastday[0])
+                            TopSectionView(location: weatherData.location, current: weatherData.current, day: weatherData.forecast.forecastday[0],viewModel: viewModel)
                             ForecastTableView(viewModel: viewModel, forecast: weatherData.forecast)
-                            BottomSectionView(current: weatherData.current)
+                            BottomSectionView(current: weatherData.current,viewModel: viewModel)
                         }
                         .padding()
                         
