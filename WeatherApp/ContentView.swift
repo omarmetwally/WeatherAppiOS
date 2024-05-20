@@ -21,14 +21,14 @@ struct ContentView: View {
                         .edgesIgnoringSafeArea(.all)
                     
                     if let weatherData = viewModel.weather {
-                        ScrollView {
-                            VStack {
-                                TopSectionView(location: weatherData.location, current: weatherData.current)
-                                ForecastTableView(viewModel: viewModel, forecast: weatherData.forecast)
-                                BottomSectionView(current: weatherData.current)
-                            }
-                            .padding()
+                        
+                        VStack {
+                            TopSectionView(location: weatherData.location, current: weatherData.current, day: weatherData.forecast.forecastday[0])
+                            ForecastTableView(viewModel: viewModel, forecast: weatherData.forecast)
+                            BottomSectionView(current: weatherData.current)
                         }
+                        .padding()
+                        
                     } else {
                         VStack {
                             ProgressView("Fetching Weather Data...")
