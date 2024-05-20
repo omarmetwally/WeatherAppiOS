@@ -33,7 +33,7 @@ struct ContentView: View {
                         VStack {
                             ProgressView("Fetching Weather Data...")
                                 .font(Font.title2)
-                                .foregroundColor(.white)
+                                .foregroundColor(viewModel.textColor)
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
                     }
